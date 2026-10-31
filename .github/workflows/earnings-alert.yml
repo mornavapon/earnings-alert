@@ -25,20 +25,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Test ntfy notification
-        if: github.event_name == 'workflow_dispatch'
-        env:
-          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
-        run: |
-          if [ -z "$NTFY_TOPIC" ]; then
-            echo "ERROR: NTFY_TOPIC secret is missing"
-            exit 1
-          fi
-
-          curl -fsS \
-            -d "Earnings Alert: ทดสอบการเชื่อมต่อ ntfy สำเร็จ 🎉" \
-            "https://ntfy.sh/${NTFY_TOPIC}"
-
       - name: Run earnings check
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
