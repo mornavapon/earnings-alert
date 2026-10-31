@@ -1,25 +1,19 @@
-
-
 name: Earnings Alert
 
 on:
   schedule:
-    - cron: "0 2 * * *" # 09:00 Thailand time (UTC+7)
+    - cron: "0 2 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
-
-concurrency:
-  group: earnings-alert
-  cancel-in-progress: false
 
 jobs:
   check-earnings:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -31,7 +25,21 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Check earnings and notify
+      - name: Test ntfy notification
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          if [ -z "$NTFY_TOPIC" ]; then
+            echo "ERROR: NTFY_TOPIC secret is missing"
+            exit 1
+          fi
+
+          curl -fsS \
+            -d "Earnings Alert: ทดสอบการเชื่อมต่อ ntfy สำเร็จ 🎉" \
+            "https://ntfy.sh/${NTFY_TOPIC}"
+
+      - name: Run earnings check
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
