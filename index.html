@@ -20,8 +20,10 @@
     <section class="panel">
       <div class="section-head"><div><h3>Watchlist</h3><p class="muted small">ตัวอย่าง: NVDA, MSFT, AAPL, GOOGL</p></div><button id="reload" class="secondary">โหลดใหม่</button></div>
       <form id="add-form" class="add-row"><input id="ticker" maxlength="15" placeholder="ใส่ Ticker เช่น NVDA" autocomplete="off"><button class="primary" type="submit">+ เพิ่มหุ้น</button></form>
+      <div class="earnings-meta" id="earnings-updated">กำลังโหลดข้อมูลวันประกาศงบ...</div>
       <div id="stocks" class="stocks"><p class="muted">กำลังโหลดรายการ...</p></div>
       <div class="actions"><button id="save" class="primary" disabled>บันทึก Watchlist ไป GitHub</button><span id="save-status" class="muted small">ยังไม่ได้เชื่อมต่อ</span></div>
+      <p id="dirty-note" class="muted small">รายการตรงกับข้อมูลที่บันทึกไว้ใน GitHub</p>
     </section>
     <section class="panel">
       <div class="section-head"><div><h3>การเชื่อมต่อ GitHub</h3><p class="muted small">ใช้ Fine-grained Personal Access Token จำกัดสิทธิ์เฉพาะ Repository นี้</p></div></div>
@@ -33,7 +35,7 @@
     <section class="panel">
       <h3>ระบบแจ้งเตือน</h3>
       <div class="settings-grid"><div><span class="muted small">แหล่งข้อมูล</span><strong>Yahoo Finance ผ่าน yfinance</strong></div><div><span class="muted small">เวลาแจ้งเตือน</span><strong>09:00 น. เวลาไทย</strong></div><div><span class="muted small">ระยะเวลา</span><strong>ก่อนวันประกาศ 1 วัน</strong></div><div><span class="muted small">การทำงาน</span><strong>GitHub Actions ทุกวัน</strong></div></div>
-      <p class="hint">วันประกาศจาก Yahoo อาจเป็นวันที่คาดการณ์และเปลี่ยนแปลงได้ ระบบจะแสดงสถานะข้อมูลจากผู้ให้บริการ ไม่ถือเป็นการยืนยันจากบริษัท</p>
+      <p class="hint">วันประกาศจาก Yahoo อาจเป็นวันที่คาดการณ์และเปลี่ยนแปลงได้ หาก Yahoo ไม่แสดงวัน ระบบจะแจ้งว่า “ยังไม่มีข้อมูลจาก Yahoo” ซึ่งไม่ได้ยืนยันว่าบริษัทไม่มีกำหนดประกาศงบ</p>
     </section>
     <footer>ข้อมูลสำหรับติดตามกำหนดการเท่านั้น · ไม่ใช่คำแนะนำการลงทุน</footer>
   </main>
