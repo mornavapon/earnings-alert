@@ -1,5 +1,42 @@
 {
-  "updated_at": null,
+  "updated_at": "2026-10-31T15:46:54.616476+07:00",
   "source": "Yahoo Finance via yfinance",
-  "tickers": {}
+  "tickers": {
+    "AAPL": {
+      "status": "scheduled",
+      "date": "2026-11-02",
+      "message": "จะประกาศงบวันที่ 2026-11-02"
+    },
+    "AMZN": {
+      "status": "no_date",
+      "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
+    },
+    "GOOGL": {
+      "status": "no_date",
+      "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
+    },
+    "META": {
+      "status": "no_date",
+      "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
+    },
+    "MSFT": {
+      "status": "scheduled",
+      "date": "2027-01-27",
+      "message": "จะประกาศงบวันที่ 2027-01-27"
+    },
+    "MU": {
+      "status": "scheduled",
+      "date": "2026-12-23",
+      "message": "จะประกาศงบวันที่ 2026-12-23"
+    },
+    "NVDA": {
+      "status": "scheduled",
+      "date": "2026-11-17",
+      "message": "จะประกาศงบวันที่ 2026-11-17"
+    },
+    "TSLA": {
+      "status": "no_date",
+      "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
+    }
+  }
 }
