@@ -1,9 +1,19 @@
+
 name: Earnings Alert
 
 on:
   schedule:
     - cron: "0 2 * * *"
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "Select TEST or NORMAL mode"
+        required: true
+        type: choice
+        default: NORMAL
+        options:
+          - TEST
+          - NORMAL
 
 permissions:
   contents: write
@@ -25,13 +35,29 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run earnings check
+      - name: TEST - Send notification to ntfy
+        if: github.event_name == 'workflow_dispatch' && inputs.mode == 'TEST'
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          if [ -z "$NTFY_TOPIC" ]; then
+            echo "ERROR: NTFY_TOPIC secret is missing"
+            exit 1
+          fi
+
+          curl -fsS \
+            -d "Earnings Alert TEST: ระบบแจ้งเตือนทำงานสำเร็จ 🎉" \
+            "https://ntfy.sh/${NTFY_TOPIC}"
+
+      - name: NORMAL - Check earnings
+        if: github.event_name == 'schedule' || inputs.mode == 'NORMAL'
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
         run: python check_earnings.py
 
       - name: Save notification history
+        if: github.event_name == 'schedule' || inputs.mode == 'NORMAL'
         run: |
           if [[ -n "$(git status --porcelain data/sent.json)" ]]; then
             git config user.name "github-actions[bot]"
