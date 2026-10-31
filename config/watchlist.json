@@ -2,12 +2,14 @@
   "tickers": [
     "AAPL",
     "AMZN",
+    "ASML",
     "GOOGL",
     "META",
     "MSFT",
     "MU",
     "NVDA",
-    "TSLA"
+    "TSLA",
+    "TSM"
   ],
-  "updated_at": "2026-10-31T07:54:12.022Z"
+  "updated_at": "2026-10-31T09:59:30.279Z"
 }
