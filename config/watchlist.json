@@ -1,11 +1,14 @@
 {
   "tickers": [
     "AAPL",
+    "AMD",
     "AMZN",
     "ARM",
     "ASML",
     "CPF.BK",
     "GOOGL",
+    "INTC",
+    "KO",
     "META",
     "MSFT",
     "MU",
@@ -13,5 +16,5 @@
     "TSLA",
     "TSM"
   ],
-  "updated_at": "2026-10-31T10:00:52.632Z"
+  "updated_at": "2026-11-01T11:16:21.006Z"
 }
