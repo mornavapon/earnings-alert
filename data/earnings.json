@@ -1,11 +1,16 @@
 {
-  "updated_at": "2026-11-01T09:35:38.175553+07:00",
+  "updated_at": "2026-11-02T09:38:42.382356+07:00",
   "source": "Yahoo Finance via yfinance",
   "tickers": {
     "AAPL": {
       "status": "scheduled",
       "date": "2026-11-02",
       "message": "จะประกาศงบวันที่ 2026-11-02"
+    },
+    "AMD": {
+      "status": "scheduled",
+      "date": "2026-11-03",
+      "message": "จะประกาศงบวันที่ 2026-11-03"
     },
     "AMZN": {
       "status": "no_date",
@@ -27,6 +32,15 @@
       "message": "จะประกาศงบวันที่ 2026-11-12"
     },
     "GOOGL": {
+      "status": "no_date",
+      "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
+    },
+    "INTC": {
+      "status": "scheduled",
+      "date": "2027-01-28",
+      "message": "จะประกาศงบวันที่ 2027-01-28"
+    },
+    "KO": {
       "status": "no_date",
       "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
     },
