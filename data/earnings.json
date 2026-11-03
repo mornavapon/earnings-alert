@@ -1,11 +1,10 @@
 {
-  "updated_at": "2026-11-02T09:38:42.382356+07:00",
+  "updated_at": "2026-11-03T09:37:49.729179+07:00",
   "source": "Yahoo Finance via yfinance",
   "tickers": {
     "AAPL": {
-      "status": "scheduled",
-      "date": "2026-11-02",
-      "message": "จะประกาศงบวันที่ 2026-11-02"
+      "status": "no_date",
+      "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
     },
     "AMD": {
       "status": "scheduled",
