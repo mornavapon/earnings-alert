@@ -7,6 +7,19 @@ let sortMode = "date"; // date = upcoming first, ticker = A-Z
 const tokenKey = "earnings_alert_github_token";
 
 function token() { return $("token").value.trim() || localStorage.getItem(tokenKey) || ""; }
+function financialUrl(ticker) {
+  const symbol = String(ticker).trim().toUpperCase();
+  if (symbol.endsWith(".BK")) {
+    const code = symbol.slice(0, -3).toLowerCase();
+    return `https://www.settrade.com/th/equities/quote/${encodeURIComponent(code)}/news`;
+  }
+  const match = symbol.match(/^([A-Z0-9-]+)\\.(HK|SS|SZ)$/);
+  if (match) {
+    const market = { HK: "hkg", SS: "sha", SZ: "she" }[match[2]];
+    return `https://stockanalysis.com/quote/${market}/${encodeURIComponent(match[1])}/financials/`;
+  }
+  return `https://stockanalysis.com/stocks/${encodeURIComponent(symbol.toLowerCase())}/financials/`;
+}
 function setStatus(msg, ok = false) {
   $("connection").textContent = msg;
   $("connection").style.color = ok ? "#3fb950" : "#d29922";
@@ -39,9 +52,13 @@ function render() {
     row.className = "stock";
     const details = document.createElement("div");
     details.className = "stock-details";
-    const name = document.createElement("span");
-    name.className = "symbol";
+    const name = document.createElement("a");
+    name.className = "symbol symbol-link";
+    name.href = financialUrl(ticker);
+    name.target = "_blank";
+    name.rel = "noopener noreferrer";
     name.textContent = ticker;
+    name.title = "เปิดดูงบการเงินล่าสุด";
     const info = earnings[ticker] || { status: "pending", message: "รอข้อมูลวันประกาศงบจากระบบ" };
     const status = document.createElement("span");
     status.className = "earnings-status " + (info.status || "pending");
