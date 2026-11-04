@@ -1,6 +1,7 @@
 {
   "tickers": [
     "AAPL",
+    "ADVANC.BK",
     "AMD",
     "AMZN",
     "ARM",
@@ -16,5 +17,5 @@
     "TSLA",
     "TSM"
   ],
-  "updated_at": "2026-11-01T11:16:21.006Z"
+  "updated_at": "2026-11-04T10:17:44.527Z"
 }
