@@ -18,6 +18,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: earnings-alert-main
+  cancel-in-progress: false
+
 jobs:
   check-earnings:
     runs-on: ubuntu-latest
@@ -65,6 +69,8 @@ jobs:
             git add data/earnings.json
             if [ -f data/sent.json ]; then git add data/sent.json; fi
             git commit -m "Update earnings data and notification history"
+            # Rebase data changes onto main in case the Watchlist was saved during this run.
+            git pull --rebase origin main
             git push
           else
             echo "No data changes to save"
