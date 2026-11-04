@@ -5,7 +5,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import requests
-from earnings_provider import next_earnings_date
+from earnings_provider import next_earnings_date, previous_earnings_date
 
 ROOT = Path(__file__).parent
 BKK = ZoneInfo("Asia/Bangkok")
@@ -31,22 +31,35 @@ snapshot = {
 new_sent = []
 
 for symbol in watch:
+    item = {}
+    try:
+        previous_date = previous_earnings_date(symbol, today=today)
+        if previous_date:
+            item["previous_date"] = previous_date.isoformat()
+            print(f"{symbol}: previous earnings={previous_date.isoformat()}")
+        else:
+            print(f"{symbol}: Yahoo returned no previous earnings date")
+    except Exception as exc:
+        print(f"{symbol}: previous earnings lookup unavailable: {exc}")
+
     try:
         earnings_date = next_earnings_date(symbol, today=today)
         if earnings_date is None:
-            snapshot["tickers"][symbol] = {
+            item.update({
                 "status": "no_date",
                 "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
-            }
-            print(f"{symbol}: Yahoo returned no earnings date")
+            })
+            snapshot["tickers"][symbol] = item
+            print(f"{symbol}: Yahoo returned no upcoming earnings date")
             continue
 
         iso_date = earnings_date.isoformat()
-        snapshot["tickers"][symbol] = {
+        item.update({
             "status": "scheduled",
             "date": iso_date,
             "message": f"จะประกาศงบวันที่ {iso_date}"
-        }
+        })
+        snapshot["tickers"][symbol] = item
         print(f"{symbol}: next earnings={iso_date}")
 
         if earnings_date != tomorrow:
@@ -72,10 +85,11 @@ for symbol in watch:
         new_sent.append(key)
         print(f"{symbol}: notification sent")
     except Exception as exc:
-        snapshot["tickers"][symbol] = {
+        item.update({
             "status": "error",
             "message": "ดึงข้อมูลไม่สำเร็จ กรุณาลองใหม่"
-        }
+        })
+        snapshot["tickers"][symbol] = item
         print(f"{symbol}: ERROR: {exc}")
 
 snapshot_path.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
