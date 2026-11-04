@@ -3,6 +3,7 @@ const $ = id => document.getElementById(id);
 let watchlist = [];
 let earnings = {};
 let dirty = false;
+let sortMode = "date"; // date = upcoming first, ticker = A-Z
 const tokenKey = "earnings_alert_github_token";
 
 function token() { return $("token").value.trim() || localStorage.getItem(tokenKey) || ""; }
@@ -18,7 +19,17 @@ function render() {
   if (!watchlist.length) {
     container.innerHTML = '<p class="muted small">ยังไม่มีหุ้นใน Watchlist — เพิ่ม Ticker ด้านบนได้เลย</p>';
   }
-  watchlist.forEach(ticker => {
+  const sortedWatchlist = [...watchlist].sort((a, b) => {
+    if (sortMode === "ticker") return a.localeCompare(b);
+    const dateA = earnings[a]?.date || "";
+    const dateB = earnings[b]?.date || "";
+    if (dateA && dateB) return dateA.localeCompare(dateB) || a.localeCompare(b);
+    if (dateA) return -1;
+    if (dateB) return 1;
+    return a.localeCompare(b);
+  });
+  watchlist.forEach; // keep saved watchlist unchanged
+  sortedWatchlist.forEach(ticker => {
     const row = document.createElement("div");
     row.className = "stock";
     const details = document.createElement("div");
@@ -57,6 +68,10 @@ function render() {
   $("dirty-note").textContent = dirty ? "มีรายการที่แก้ไขแล้วยังไม่ได้บันทึกลง GitHub" : "รายการตรงกับข้อมูลที่บันทึกไว้ใน GitHub";
   $("dirty-note").className = dirty ? "save-warning small" : "muted small";
 }
+$("sort-mode").onchange = event => {
+  sortMode = event.target.value;
+  render();
+};
 function formatDate(iso) {
   const [year, month, day] = iso.split("-").map(Number);
   return new Intl.DateTimeFormat("th-TH", { day: "numeric", month: "short", year: "numeric" })
