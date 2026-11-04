@@ -3,9 +3,26 @@ import os
 from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
+from urllib.parse import quote
 
 import requests
 from earnings_provider import next_earnings_date, previous_earnings_date
+
+def financial_url(symbol: str) -> str:
+    """Build the same financial-statement destination used by the web app."""
+    symbol = symbol.strip().upper()
+    if symbol.endswith(".BK"):
+        code = quote(symbol[:-3].lower(), safe="")
+        return f"https://www.settrade.com/th/equities/quote/{code}/news"
+
+    parts = symbol.rsplit(".", 1)
+    if len(parts) == 2 and parts[1] in {"HK", "SS", "SZ"}:
+        market = {"HK": "hkg", "SS": "sha", "SZ": "she"}[parts[1]]
+        code = quote(parts[0], safe="")
+        return f"https://stockanalysis.com/quote/{market}/{code}/financials/"
+
+    return f"https://stockanalysis.com/stocks/{quote(symbol.lower(), safe='')}/financials/"
+
 
 ROOT = Path(__file__).parent
 BKK = ZoneInfo("Asia/Bangkok")
@@ -71,10 +88,18 @@ for symbol in watch:
             continue
 
         title = f"Earnings tomorrow: {symbol}"
+        report_url = financial_url(symbol)
         message = (f"{symbol} มีกำหนดประกาศผลประกอบการวันพรุ่งนี้ "
                    f"({iso_date})\n"
+                   "แตะการแจ้งเตือนเพื่อเปิดดูงบการเงินล่าสุด\n"
+                   f"{report_url}\n"
                    "เวลาออกงบอาจเปลี่ยนแปลงได้ โปรดตรวจสอบกับบริษัทอีกครั้ง")
-        headers = {"Title": title, "Priority": "default", "Tags": "chart_with_upwards_trend"}
+        headers = {
+            "Title": title,
+            "Priority": "default",
+            "Tags": "chart_with_upwards_trend",
+            "Click": report_url,
+        }
         if ntfy_token:
             headers["Authorization"] = f"Bearer {ntfy_token}"
         response = requests.post(
