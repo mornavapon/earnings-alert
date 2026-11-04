@@ -1,74 +1,89 @@
 {
-  "updated_at": "2026-11-04T09:36:12.181948+07:00",
+  "updated_at": "2026-11-04T16:18:47.024267+07:00",
   "source": "Yahoo Finance via yfinance",
   "tickers": {
     "AAPL": {
+      "previous_date": "2026-11-02",
       "status": "scheduled",
       "date": "2027-01-28",
       "message": "จะประกาศงบวันที่ 2027-01-28"
     },
     "AMD": {
+      "previous_date": "2026-11-03",
       "status": "no_date",
       "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
     },
     "AMZN": {
+      "previous_date": "2026-10-29",
       "status": "no_date",
       "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
     },
     "ARM": {
+      "previous_date": "2026-07-29",
       "status": "scheduled",
       "date": "2026-11-04",
       "message": "จะประกาศงบวันที่ 2026-11-04"
     },
     "ASML": {
+      "previous_date": "2026-10-14",
       "status": "scheduled",
       "date": "2027-01-27",
       "message": "จะประกาศงบวันที่ 2027-01-27"
     },
     "CPF.BK": {
+      "previous_date": "2026-08-13",
       "status": "scheduled",
       "date": "2026-11-12",
       "message": "จะประกาศงบวันที่ 2026-11-12"
     },
     "GOOGL": {
+      "previous_date": "2026-10-28",
       "status": "no_date",
       "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
     },
     "INTC": {
+      "previous_date": "2026-10-29",
       "status": "scheduled",
       "date": "2027-01-28",
       "message": "จะประกาศงบวันที่ 2027-01-28"
     },
     "KO": {
+      "previous_date": "2026-10-27",
       "status": "no_date",
       "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
     },
     "META": {
+      "previous_date": "2026-10-21",
       "status": "scheduled",
       "date": "2027-01-27",
       "message": "จะประกาศงบวันที่ 2027-01-27"
     },
     "MSFT": {
+      "previous_date": "2026-10-28",
       "status": "scheduled",
       "date": "2027-01-27",
       "message": "จะประกาศงบวันที่ 2027-01-27"
     },
     "MU": {
+      "previous_date": "2026-09-30",
       "status": "scheduled",
       "date": "2026-12-23",
       "message": "จะประกาศงบวันที่ 2026-12-23"
     },
     "NVDA": {
+      "previous_date": "2026-08-26",
       "status": "scheduled",
       "date": "2026-11-17",
       "message": "จะประกาศงบวันที่ 2026-11-17"
     },
     "TSLA": {
+      "previous_date": "2026-10-21",
       "status": "scheduled",
       "date": "2027-01-27",
       "message": "จะประกาศงบวันที่ 2027-01-27"
     },
     "TSM": {
+      "previous_date": "2026-10-15",
       "status": "scheduled",
       "date": "2027-01-14",
       "message": "จะประกาศงบวันที่ 2027-01-14"
