@@ -50,7 +50,8 @@ jobs:
           fi
 
           curl -fsS \
-            -d "Earnings Alert TEST: ระบบแจ้งเตือนทำงานสำเร็จ 🎉" \
+            -H "Click: https://stockanalysis.com/stocks/nvda/financials/" \
+            -d "Earnings Alert TEST: ระบบแจ้งเตือนทำงานสำเร็จ 🎉\nแตะการแจ้งเตือนเพื่อทดลองเปิดหน้างบ NVDA\nhttps://stockanalysis.com/stocks/nvda/financials/" \
             "https://ntfy.sh/${NTFY_TOPIC}"
 
       - name: NORMAL - Check earnings
