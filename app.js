@@ -19,16 +19,21 @@ function render() {
   if (!watchlist.length) {
     container.innerHTML = '<p class="muted small">ยังไม่มีหุ้นใน Watchlist — เพิ่ม Ticker ด้านบนได้เลย</p>';
   }
+  // Use Bangkok calendar date so earnings scheduled today are still considered upcoming.
+  const today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Bangkok", year: "numeric", month: "2-digit", day: "2-digit"
+  }).format(new Date());
   const sortedWatchlist = [...watchlist].sort((a, b) => {
     if (sortMode === "ticker") return a.localeCompare(b);
-    const dateA = earnings[a]?.date || "";
-    const dateB = earnings[b]?.date || "";
+    const infoA = earnings[a] || {};
+    const infoB = earnings[b] || {};
+    const dateA = infoA.status === "scheduled" && infoA.date >= today ? infoA.date : "";
+    const dateB = infoB.status === "scheduled" && infoB.date >= today ? infoB.date : "";
     if (dateA && dateB) return dateA.localeCompare(dateB) || a.localeCompare(b);
     if (dateA) return -1;
     if (dateB) return 1;
     return a.localeCompare(b);
   });
-  watchlist.forEach; // keep saved watchlist unchanged
   sortedWatchlist.forEach(ticker => {
     const row = document.createElement("div");
     row.className = "stock";
