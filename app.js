@@ -39,11 +39,18 @@ function render() {
       status.textContent = info.message || "รอข้อมูลวันประกาศงบจากระบบ";
     }
     details.append(name, status);
+
+    const previous = document.createElement("span");
+    previous.className = "previous-earnings";
+    previous.textContent = info.previous_date
+      ? `ไตรมาสก่อน ประกาศวันที่ ${formatDate(info.previous_date)}`
+      : "ไตรมาสก่อน: ยังไม่มีข้อมูล";
+
     const del = document.createElement("button");
     del.className = "remove";
     del.textContent = "ลบ";
     del.onclick = () => { watchlist = watchlist.filter(x => x !== ticker); changed(); };
-    row.append(details, del);
+    row.append(details, previous, del);
     container.append(row);
   });
   $("save").disabled = !dirty || !token();
