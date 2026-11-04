@@ -18,7 +18,7 @@
       <div class="counter"><strong id="count">0</strong><span>หุ้นที่ติดตาม</span></div>
     </section>
     <section class="panel">
-      <div class="section-head"><div><h3>Watchlist</h3><p class="muted small">ตัวอย่าง: NVDA, MSFT, AAPL, GOOGL</p></div><button id="reload" class="secondary">โหลดใหม่</button></div>
+      <div class="section-head"><div><h3>Watchlist</h3><p class="muted small">ตัวอย่าง: NVDA, MSFT, AAPL, GOOGL</p></div><div class="watchlist-tools"><label class="sort-label" for="sort-mode">เรียง</label><select id="sort-mode" class="sort-select" aria-label="เรียงรายการหุ้น"><option value="date" selected>วันที่ใกล้สุด</option><option value="ticker">ชื่อหุ้น A–Z</option></select><button id="reload" class="secondary">โหลดใหม่</button></div></div>
       <form id="add-form" class="add-row"><input id="ticker" maxlength="15" placeholder="ใส่ Ticker เช่น NVDA" autocomplete="off"><button class="primary" type="submit">+ เพิ่มหุ้น</button></form>
       <div class="earnings-meta" id="earnings-updated">กำลังโหลดข้อมูลวันประกาศงบ...</div>
       <div id="stocks" class="stocks"><p class="muted">กำลังโหลดรายการ...</p></div>
