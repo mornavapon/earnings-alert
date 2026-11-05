@@ -1,17 +1,29 @@
 {
-  "updated_at": "2026-11-04T16:53:04.465396+07:00",
+  "updated_at": "2026-11-05T09:43:50.261529+07:00",
   "source": "Yahoo Finance via yfinance",
   "tickers": {
+    "300750.SZ": {
+      "previous_date": "2026-10-20",
+      "status": "no_date",
+      "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
+    },
     "AAPL": {
       "previous_date": "2026-11-02",
       "status": "scheduled",
       "date": "2027-01-28",
       "message": "จะประกาศงบวันที่ 2027-01-28"
     },
+    "ADVANC.BK": {
+      "previous_date": "2026-11-03",
+      "status": "scheduled",
+      "date": "2027-02-03",
+      "message": "จะประกาศงบวันที่ 2027-02-03"
+    },
     "AMD": {
       "previous_date": "2026-11-03",
-      "status": "no_date",
-      "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
+      "status": "scheduled",
+      "date": "2027-02-02",
+      "message": "จะประกาศงบวันที่ 2027-02-02"
     },
     "AMZN": {
       "previous_date": "2026-10-29",
@@ -19,10 +31,9 @@
       "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
     },
     "ARM": {
-      "previous_date": "2026-07-29",
-      "status": "scheduled",
-      "date": "2026-11-04",
-      "message": "จะประกาศงบวันที่ 2026-11-04"
+      "previous_date": "2026-11-04",
+      "status": "no_date",
+      "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
     },
     "ASML": {
       "previous_date": "2026-10-14",
