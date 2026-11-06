@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T09:43:50.261529+07:00",
+  "updated_at": "2026-11-06T09:43:13.138714+07:00",
   "source": "Yahoo Finance via yfinance",
   "tickers": {
     "300750.SZ": {
@@ -32,8 +32,9 @@
     },
     "ARM": {
       "previous_date": "2026-11-04",
-      "status": "no_date",
-      "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
+      "status": "scheduled",
+      "date": "2027-02-03",
+      "message": "จะประกาศงบวันที่ 2027-02-03"
     },
     "ASML": {
       "previous_date": "2026-10-14",
