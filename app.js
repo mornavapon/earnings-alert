@@ -13,7 +13,7 @@ function financialUrl(ticker) {
     const code = symbol.slice(0, -3).toLowerCase();
     return `https://www.settrade.com/th/equities/quote/${encodeURIComponent(code)}/news`;
   }
-  const match = symbol.match(/^([A-Z0-9-]+)\\.(HK|SS|SZ)$/);
+  const match = symbol.match(/^([A-Z0-9-]+)\.(HK|SS|SZ)$/);
   if (match) {
     const market = { HK: "hkg", SS: "sha", SZ: "she" }[match[2]];
     return `https://stockanalysis.com/quote/${market}/${encodeURIComponent(match[1])}/financials/`;
@@ -136,7 +136,7 @@ async function loadEarnings() {
 async function loadWatchlist() {
   try {
     const data = await api(`/repos/${OWNER}/${REPO}/contents/${PATH}?ref=${BRANCH}`);
-    const raw = atob(data.content.replace(/\\n/g, ""));
+    const raw = atob(data.content.replace(/\n/g, ""));
     watchlist = JSON.parse(decodeURIComponent(escape(raw))).tickers || [];
     watchlist = [...new Set(watchlist.map(x => String(x).toUpperCase().trim()).filter(Boolean))].sort();
     dirty = false;
@@ -151,7 +151,7 @@ async function loadWatchlist() {
 }
 $("add-form").onsubmit = event => {
   event.preventDefault();
-  const ticker = $("ticker").value.trim().toUpperCase().replace(/^\\$/, "");
+  const ticker = $("ticker").value.trim().toUpperCase().replace(/^\$/, "");
   if (!/^[A-Z0-9.^=-]{1,15}$/.test(ticker)) { alert("Ticker ไม่ถูกต้อง"); return; }
   if (watchlist.includes(ticker)) { alert("มีหุ้นตัวนี้ในรายการแล้ว"); return; }
   watchlist.push(ticker);
@@ -198,9 +198,9 @@ $("save").onclick = async () => {
 };
 $("forget").onclick = () => {
   const confirmed = window.confirm(
-    "ยืนยันการล้าง GitHub Token จากเครื่องนี้หรือไม่?\\n\\n" +
-    "การดำเนินการนี้จะลบเฉพาะ Token ที่บันทึกไว้ในเบราว์เซอร์เครื่องนี้เท่านั้น\\n" +
-    "จะไม่ลบ Token ออกจาก GitHub และไม่ลบ Watchlist หรือข้อมูลหุ้นใน Repository\\n\\n" +
+    "ยืนยันการล้าง GitHub Token จากเครื่องนี้หรือไม่?\n\n" +
+    "การดำเนินการนี้จะลบเฉพาะ Token ที่บันทึกไว้ในเบราว์เซอร์เครื่องนี้เท่านั้น\n" +
+    "จะไม่ลบ Token ออกจาก GitHub และไม่ลบ Watchlist หรือข้อมูลหุ้นใน Repository\n\n" +
     "หากไม่ต้องการล้าง ให้กด Cancel"
   );
   if (!confirmed) return;
