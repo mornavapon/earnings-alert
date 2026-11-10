@@ -2,6 +2,9 @@
 
 <img width="639" height="743" alt="Screenshot 2026-11-10 103132" src="https://github.com/user-attachments/assets/1c99eb96-4f00-4223-b02a-c9a2b1ca6260" />
 
+ลิ้งค์ไปยังเอไอที่สร้างแอป
+https://chatgpt.com/g/g-p-6ae01a981d208191b90116a6a767d75e-github/c/6af13eb7-5598-83ec-84ee-bf218f4d985a
+
 A free GitHub Pages + GitHub Actions app for a personal US-stock earnings watchlist. Yahoo Finance data is accessed through `yfinance`; notifications are sent to ntfy.
 
 ## Important limitations
