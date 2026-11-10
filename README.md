@@ -1,6 +1,6 @@
 # Earnings Alert
 
-<img width="639" height="743" alt="Screenshot 2026-11-10 103132" src="https://github.com/user-attachments/assets/1c99eb96-4f00-4223-b02a-c9a2b1ca6260" />
+<img width="488" height="545" alt="Screenshot 2026-11-10 125345" src="https://github.com/user-attachments/assets/1f71fd48-894f-493a-8e28-4985126b8542" />
 
 ลิ้งค์ไปยังเอไอที่สร้างแอป
 https://chatgpt.com/g/g-p-6ae01a981d208191b90116a6a767d75e-github/c/6af13eb7-5598-83ec-84ee-bf218f4d985a
