@@ -1,5 +1,7 @@
 # Earnings Alert
 
+<img width="779" height="882" alt="Screenshot 2026-11-10 102851" src="https://github.com/user-attachments/assets/5c989fe7-fd6a-41fe-a7d8-7351e2970e23" />
+
 A free GitHub Pages + GitHub Actions app for a personal US-stock earnings watchlist. Yahoo Finance data is accessed through `yfinance`; notifications are sent to ntfy.
 
 ## Important limitations
