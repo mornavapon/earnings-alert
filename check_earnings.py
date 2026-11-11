@@ -24,6 +24,36 @@ def financial_url(symbol: str) -> str:
     return f"https://stockanalysis.com/stocks/{quote(symbol.lower(), safe='')}/financials/"
 
 
+# Thai listed banking / bank-related group tickers used for the shorter display window.
+THAI_BANK_TICKERS = {
+    "BBL.BK", "KBANK.BK", "KTB.BK", "SCB.BK", "BAY.BK", "TTB.BK",
+    "KKP.BK", "TISCO.BK", "LHFG.BK", "CIMBT.BK", "CREDIT.BK", "TCAP.BK",
+}
+
+def thai_reporting_window(symbol: str, today):
+    """Return the next indicative Thai reporting-window date for a Thai ticker.
+
+    These are display estimates, not company-announced dates or a substitute
+    for the applicable filing rules. Quarterly dates use calendar-year periods.
+    """
+    if not symbol.upper().endswith(".BK"):
+        return None
+
+    is_bank_group = symbol.upper() in THAI_BANK_TICKERS
+    month_days = (
+        [(4, 21), (7, 21), (10, 21), (2, 28)]
+        if is_bank_group
+        else [(5, 15), (8, 14), (11, 14), (2, 28)]
+    )
+    candidates = []
+    for year in (today.year, today.year + 1):
+        for month, day in month_days:
+            candidate_year = year + 1 if month == 2 else year
+            candidate = today.replace(year=candidate_year, month=month, day=day)
+            if candidate >= today:
+                candidates.append(candidate)
+    return min(candidates).isoformat() if candidates else None
+
 ROOT = Path(__file__).parent
 BKK = ZoneInfo("Asia/Bangkok")
 now = datetime.now(BKK)
@@ -66,6 +96,12 @@ for symbol in watch:
                 "status": "no_date",
                 "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
             })
+            deadline_date = thai_reporting_window(symbol, today)
+            if deadline_date:
+                item["deadline_date"] = deadline_date
+                item["deadline_type"] = (
+                    "bank_group" if symbol.upper() in THAI_BANK_TICKERS else "general"
+                )
             snapshot["tickers"][symbol] = item
             print(f"{symbol}: Yahoo returned no upcoming earnings date")
             continue
