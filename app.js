@@ -65,7 +65,11 @@ function render() {
     if (info.status === "scheduled" && info.date) {
       status.textContent = `📅 หุ้น ${ticker} จะประกาศงบวันที่ ${formatDate(info.date)}`;
     } else if (info.status === "no_date") {
-      status.textContent = `⏳ หุ้น ${ticker}: ยังไม่มีข้อมูลกำหนดวันประกาศจาก Yahoo`;
+      if (info.deadline_date && ticker.endsWith(".BK")) {
+        status.textContent = `⏳ รอข้อมูลวันประกาศงบจากระบบ · กรอบเวลาคาดหมาย: คาดว่าจะมีข้อมูลภายในวันที่ ${formatDate(info.deadline_date)}`;
+      } else {
+        status.textContent = `⏳ หุ้น ${ticker}: ยังไม่มีข้อมูลกำหนดวันประกาศจาก Yahoo`;
+      }
     } else if (info.status === "error") {
       status.textContent = `⚠️ หุ้น ${ticker}: ดึงข้อมูลไม่สำเร็จ`;
     } else {
