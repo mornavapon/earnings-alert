@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-11T15:08:21.985293+07:00",
+  "updated_at": "2026-11-11T15:11:22.251567+07:00",
   "source": "Yahoo Finance via yfinance",
   "tickers": {
     "300750.SZ": {
@@ -88,6 +88,13 @@
       "date": "2026-11-17",
       "message": "จะประกาศงบวันที่ 2026-11-17"
     },
+    "SCB.BK": {
+      "previous_date": "2026-10-21",
+      "status": "no_date",
+      "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ",
+      "deadline_date": "2027-02-28",
+      "deadline_type": "bank_group"
+    },
     "TSLA": {
       "previous_date": "2026-10-21",
       "status": "scheduled",
@@ -99,6 +106,13 @@
       "status": "scheduled",
       "date": "2027-01-14",
       "message": "จะประกาศงบวันที่ 2027-01-14"
+    },
+    "TVO.BK": {
+      "previous_date": "2026-08-14",
+      "status": "no_date",
+      "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ",
+      "deadline_date": "2026-11-14",
+      "deadline_type": "general"
     }
   }
 }
