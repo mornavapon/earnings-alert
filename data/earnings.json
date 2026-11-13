@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-12T09:38:57.589927+07:00",
+  "updated_at": "2026-11-13T09:36:23.438658+07:00",
   "source": "Yahoo Finance via yfinance",
   "tickers": {
     "300750.SZ": {
@@ -43,10 +43,11 @@
       "message": "จะประกาศงบวันที่ 2027-01-27"
     },
     "CPF.BK": {
-      "previous_date": "2026-08-13",
-      "status": "scheduled",
-      "date": "2026-11-13",
-      "message": "จะประกาศงบวันที่ 2026-11-13"
+      "previous_date": "2026-11-12",
+      "status": "no_date",
+      "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ",
+      "deadline_date": "2026-11-14",
+      "deadline_type": "general"
     },
     "GOOGL": {
       "previous_date": "2026-10-28",
