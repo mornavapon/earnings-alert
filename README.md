@@ -1,5 +1,9 @@
 # Earnings Alert
 
+สามารถเพิ่มชื่อหุ้นได้ทุกตลาดหุ้น โดยพิมพ์เพิ่มชื่อหุ้น ตามหลักเกณฑ์ของ Yahoo Finance
+เช่น advanc.bk, cpall.bk, nvda, aapl, tsla, 000660.ks, 3750.hk,
+688981.ss, 9984.T
+
 <img width="488" height="545" alt="Screenshot 2026-11-10 125345" src="https://github.com/user-attachments/assets/1f71fd48-894f-493a-8e28-4985126b8542" />
 
 ลิ้งค์ไปยังเอไอที่สร้างแอป
