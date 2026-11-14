@@ -50,7 +50,7 @@ def thai_reporting_window(symbol: str, today):
         for month, day in month_days:
             candidate_year = year + 1 if month == 2 else year
             candidate = today.replace(year=candidate_year, month=month, day=day)
-            if candidate >= today:
+            if candidate > today:
                 candidates.append(candidate)
     return min(candidates).isoformat() if candidates else None
 
