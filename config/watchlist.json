@@ -8,8 +8,10 @@
     "ARM",
     "ASML",
     "BDMS.BK",
+    "CPALL.BK",
     "CPF.BK",
     "GOOGL",
+    "GULF.BK",
     "INTC",
     "KO",
     "META",
@@ -17,9 +19,10 @@
     "MU",
     "NVDA",
     "SCB.BK",
+    "SCC.BK",
     "TSLA",
     "TSM",
     "TVO.BK"
   ],
-  "updated_at": "2026-11-14T07:18:29.191Z"
+  "updated_at": "2026-11-14T07:20:44.460Z"
 }
