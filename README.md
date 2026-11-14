@@ -5,37 +5,132 @@
 ลิ้งค์ไปยังเอไอที่สร้างแอป
 https://chatgpt.com/g/g-p-6ae01a981d208191b90116a6a767d75e-github/c/6af13eb7-5598-83ec-84ee-bf218f4d985a
 
-A free GitHub Pages + GitHub Actions app for a personal US-stock earnings watchlist. Yahoo Finance data is accessed through `yfinance`; notifications are sent to ntfy.
+---
 
-## Important limitations
-- Yahoo Finance does not provide a stable, documented free earnings-calendar API for this workflow. `yfinance` relies on Yahoo endpoints and may stop working or be rate-limited.
-- Earnings dates can be estimates and may change. This MVP alerts based on the next date returned by Yahoo; verify important dates with the company.
-- The app's Watchlist editor uses a fine-grained GitHub token in this browser. Restrict it to this repository only, grant Contents read/write, set an expiration, and revoke it if the device/browser is shared or compromised.
-- No EPS/revenue results are collected; this app only reminds you before the event.
+## ⚠️ คำเตือนสำคัญก่อนใช้งาน
 
-## 1. GitHub Pages
-Repository Settings → Pages → Deploy from a branch → `main` → `/ (root)` → Save.
+### ใช้เว็บแอปจากแท็บเล็ตเครื่องหลักเพียงเครื่องเดียว
 
-## 2. GitHub token for Watchlist editing
-GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token.
-- Resource owner: `mornavapon`
-- Repository access: Only select repositories → `earnings-alert`
-- Repository permissions: Contents = Read and write
-- Set an expiration date.
-Paste the token into the app's GitHub Token field and press Connect. Do not share the token.
+**ตอนนี้ให้ถือว่าแท็บเล็ตเป็นเครื่องหลัก (ฐานทัพ) สำหรับใช้งาน Earnings Alert และแก้ไข Watchlist**
 
-## 3. ntfy secrets
-Repository Settings → Secrets and variables → Actions → New repository secret:
-- `NTFY_TOPIC`: your private ntfy topic name (same topic configured on Android)
-- `NTFY_TOKEN`: optional; leave unset if your topic is public/unprotected.
+ไม่ควรเปิดแก้ไขและบันทึก Watchlist จากหลายเครื่องพร้อม ๆ กัน เพราะ Watchlist ทั้งหมดถูกเก็บไว้ในไฟล์เดียวบน GitHub เมื่อกดปุ่ม **บันทึก Watchlist ไป GitHub** แอปจะส่งรายการหุ้นทั้งชุดจากเครื่องนั้นไปแทนที่ข้อมูลเดิม
 
-## 4. Workflow
-Actions → Earnings Alert → Run workflow to test. Scheduled run is daily at 02:00 UTC (09:00 Thailand time). GitHub scheduled workflows can be delayed during busy periods.
+ตัวอย่าง: ถ้าแท็บเล็ตมี Watchlist ล่าสุด 30 หุ้น แต่คุณเปิดเว็บแอปจากคอมพิวเตอร์ที่ยังเป็นรายการเก่า 25 หุ้น แล้วกดบันทึกจากคอมพิวเตอร์ รายการ 30 หุ้นบน GitHub อาจถูกแทนที่ด้วย 25 หุ้นนั้น หุ้นที่เพิ่มไว้จากแท็บเล็ตจึงอาจหายไปได้ การบันทึกจากหลายเครื่องไม่ได้รวมรายการให้อัตโนมัติ
 
-## Files
-- `index.html`, `style.css`, `app.js`: GitHub Pages frontend
-- `config/watchlist.json`: source of truth for tracked symbols
-- `earnings_provider.py`: Yahoo data adapter; replace this module to change provider
-- `check_earnings.py`: daily alert logic
-- `.github/workflows/earnings-alert.yml`: scheduled workflow
-- `data/sent.json`: duplicate-notification history
+- ใช้งานและบันทึก Watchlist จาก **แท็บเล็ตเครื่องหลัก** เป็นหลัก
+- หากเปิดเว็บแอปจากเครื่องอื่นเพื่อดูข้อมูล ให้หลีกเลี่ยงการแก้ไข Watchlist และ **อย่ากดปุ่ม “บันทึก Watchlist ไป GitHub”**
+- หากจำเป็นต้องย้ายไปใช้เครื่องอื่นจริง ๆ ให้ตรวจสอบและโหลด Watchlist ล่าสุดจาก GitHub ก่อนแก้ไขทุกครั้ง และควรหยุดแก้ไขจากเครื่องเดิมก่อน
+
+### GitHub Token คืออะไร และทำไมแอปจึงต้องใช้?
+
+GitHub Token เปรียบเสมือนกุญแจอนุญาตให้เว็บแอปเข้าถึง Repository ของคุณได้ โดย Earnings Alert ใช้ Token นี้เพื่อ:
+- อ่านไฟล์ `config/watchlist.json` เพื่อโหลดรายชื่อหุ้นที่ติดตาม
+- เขียนไฟล์ `config/watchlist.json` เมื่อคุณกดบันทึก Watchlist
+
+Token **ไม่ได้ใช้เพื่อดึงข้อมูลราคาหุ้นหรือวันประกาศงบ** และไม่ได้ทำให้แอปเข้าถึง Repository อื่น หากตั้งค่าสิทธิ์ตามคำแนะนำด้านล่าง
+
+ข้อควรระวัง:
+- สร้างแบบ Fine-grained token และให้สิทธิ์เฉพาะ Repository `earnings-alert` เท่านั้น
+- ให้สิทธิ์ Repository permissions เฉพาะ `Contents: Read and write`
+- กำหนดวันหมดอายุให้ Token
+- Token จะถูกเก็บไว้ในเบราว์เซอร์ของเครื่องที่เชื่อมต่อ ไม่ควรนำไปใส่ในเครื่องสาธารณะหรือเครื่องที่ผู้อื่นใช้ร่วมกัน
+- **ห้ามส่ง Token ให้ผู้อื่น หรือวาง Token ลงในแชต**
+- หากสงสัยว่า Token รั่วไหลหรือมีผู้อื่นเข้าถึงเครื่องได้ ให้เพิกถอน Token ที่ GitHub
+
+---
+
+## ภาพรวมของแอป
+
+เว็บแอปส่วนตัวสำหรับติดตามวันประกาศงบของหุ้นไทยและต่างประเทศ ใช้ GitHub Pages เป็นหน้าเว็บ, GitHub Actions ทำงานอัตโนมัติทุกวัน และใช้ Yahoo Finance ผ่านไลบรารี `yfinance` เพื่อดึงวันประกาศงบ การแจ้งเตือนส่งผ่าน ntfy
+
+### ข้อจำกัดที่ควรรู้
+
+- Yahoo Finance ไม่มี API ปฏิทินประกาศงบแบบฟรีที่มีเอกสารรับรองและรับประกันความเสถียร ไลบรารี `yfinance` อาศัยช่องทางข้อมูลของ Yahoo ซึ่งอาจเปลี่ยนแปลง ใช้งานไม่ได้ชั่วคราว หรือถูกจำกัดจำนวนการเรียกข้อมูล
+- วันประกาศงบจาก Yahoo อาจเป็นเพียงการประมาณการและเปลี่ยนแปลงได้ ควรตรวจสอบกับบริษัทหรือแหล่งข้อมูลทางการเมื่อเป็นวันที่สำคัญ
+- สำหรับหุ้นไทยที่ Yahoo ยังไม่แสดงวันประกาศงบ แอปจะแสดง **กรอบเวลาคาดหมาย** เพื่อช่วยติดตาม ไม่ใช่วันที่บริษัทประกาศยืนยัน
+- แอปนี้ไม่ได้ดึงผลประกอบการ เช่น EPS หรือรายได้ แต่ทำหน้าที่เตือนก่อนวันประกาศงบเท่านั้น
+- GitHub Actions แบบตั้งเวลาอาจเริ่มทำงานช้ากว่าเวลาที่กำหนดในช่วงที่ GitHub มีงานหนาแน่น
+
+## 1. การเปิดใช้งาน GitHub Pages
+
+เข้า Repository → **Settings** → **Pages**
+- Build and deployment: เลือก **Deploy from a branch**
+- Branch: เลือก `main`
+- Folder: เลือก `/ (root)`
+- กด **Save**
+
+เว็บแอปจะเผยแพร่ผ่าน GitHub Pages เมื่อ GitHub สร้างหน้าเว็บเสร็จแล้ว
+
+## 2. การสร้าง GitHub Token เพื่อเชื่อมต่อ Watchlist
+
+Token ใช้ให้เว็บแอปอ่านและบันทึกรายชื่อหุ้นใน Repository ได้ โดยไม่ต้องเปิดสิทธิ์กว้างเกินความจำเป็น
+
+1. เข้า GitHub → รูปโปรไฟล์ → **Settings**
+2. เลือก **Developer settings**
+3. เข้า **Personal access tokens** → **Fine-grained tokens**
+4. กด **Generate new token**
+5. ตั้งค่าดังนี้:
+   - **Token name:** ตั้งชื่อให้จำได้ เช่น `Earnings Alert Tablet`
+   - **Expiration:** กำหนดวันหมดอายุ ไม่แนะนำให้เลือกแบบไม่หมดอายุ
+   - **Resource owner:** `mornavapon`
+   - **Repository access:** เลือก **Only select repositories**
+   - เลือก Repository: `earnings-alert`
+   - **Repository permissions → Contents:** เลือก **Read and write**
+6. กดสร้าง Token แล้วคัดลอกเก็บไว้ในที่ปลอดภัย GitHub จะแสดง Token ให้คัดลอกในขั้นตอนนี้
+7. เปิดเว็บแอปบนแท็บเล็ตเครื่องหลัก วาง Token ในช่อง **GitHub Token** แล้วกด **Connect**
+
+เมื่อเชื่อมต่อสำเร็จ แอปจะโหลด Watchlist จาก GitHub มาแสดง Token จะถูกเก็บในเบราว์เซอร์ของแท็บเล็ตเครื่องนั้น เพื่อให้เปิดใช้งานครั้งต่อไปได้โดยไม่ต้องกรอกใหม่
+
+**อย่าส่ง Token มาให้ ChatGPT หรือบุคคลอื่น** หาก Token หมดอายุหรือใช้ไม่ได้ ให้สร้าง Token ใหม่ด้วยสิทธิ์ตามขั้นตอนข้างต้น แล้วเชื่อมต่อบนเครื่องหลักอีกครั้ง
+
+## 3. การตั้งค่า ntfy สำหรับรับการแจ้งเตือน
+
+แอปใช้ ntfy ส่งข้อความแจ้งเตือนไปยังแท็บเล็ต Android
+
+1. เปิด Repository → **Settings**
+2. เข้า **Secrets and variables** → **Actions**
+3. กด **New repository secret** แล้วเพิ่มค่าต่อไปนี้:
+
+| ชื่อ Secret | ใช้ทำอะไร |
+|---|---|
+| `NTFY_TOPIC` | ชื่อ Topic ส่วนตัวที่ใช้รับการแจ้งเตือน ต้องตรงกับ Topic ที่สมัครไว้ในแอป ntfy บน Android |
+| `NTFY_TOKEN` | ไม่บังคับ ใช้กรณี Topic ต้องมีการยืนยันตัวตน หาก Topic ไม่ได้ตั้งการป้องกัน สามารถเว้นไว้ได้ |
+
+อย่าใส่ค่า Secret ลงในไฟล์โค้ดหรือ README
+
+## 4. การทำงานอัตโนมัติและการทดสอบ
+
+- เข้า Repository → **Actions**
+- เลือก Workflow ชื่อ **Earnings Alert**
+- กด **Run workflow** เพื่อสั่งทำงานและทดสอบด้วยตนเอง
+- ระบบตั้งเวลาให้ทำงานทุกวันเวลา **09:00 น. ตามเวลาไทย** (02:00 UTC)
+- เมื่อพบหุ้นที่มีกำหนดประกาศงบในวันพรุ่งนี้ ระบบจะส่งการแจ้งเตือนผ่าน ntfy
+- GitHub อาจเริ่ม Workflow ช้ากว่าเวลาที่ตั้งไว้ได้ จึงไม่ควรถือว่าแจ้งเตือนจะมาตรงเวลา 09:00 น. ทุกวันพอดี
+
+## 5. กรอบเวลาคาดหมายสำหรับหุ้นไทย
+
+กรอบเวลานี้ใช้เฉพาะหุ้นไทยที่ Ticker ลงท้ายด้วย `.BK` และจะแสดงเมื่อ Yahoo ยังไม่มีวันประกาศงบที่กำลังจะมาถึง
+
+**หุ้นกลุ่มธนาคารและกลุ่มการเงินที่กำหนดไว้ในระบบ**
+- 21 เมษายน
+- 21 กรกฎาคม
+- 21 ตุลาคม
+- 28 กุมภาพันธ์ (กรอบงบประจำปี)
+
+**หุ้นไทยกลุ่มอื่น**
+- 15 พฤษภาคม
+- 14 สิงหาคม
+- 14 พฤศจิกายน
+- 28 กุมภาพันธ์ (กรอบงบประจำปี)
+
+วันที่เหล่านี้เป็นเพียงกรอบเวลาโดยประมาณที่ใช้ช่วยติดตาม ไม่ใช่วันที่ประกาศงบที่บริษัทยืนยัน และระบบจะแสดงกรอบถัดไปที่ยังไม่ผ่านวันที่ปัจจุบัน
+
+## 6. ไฟล์สำคัญใน Repository
+
+- `index.html`, `style.css`, `app.js`: ส่วนหน้าเว็บของ GitHub Pages
+- `config/watchlist.json`: รายชื่อหุ้นที่ติดตาม เป็นข้อมูลหลักที่เว็บแอปอ่านและบันทึก
+- `earnings_provider.py`: ส่วนเชื่อมต่อ Yahoo Finance ผ่าน `yfinance`
+- `check_earnings.py`: ตรวจสอบวันประกาศงบ สร้างไฟล์ข้อมูล และส่งการแจ้งเตือน
+- `.github/workflows/earnings-alert.yml`: ตั้งเวลารันระบบอัตโนมัติ
+- `data/earnings.json`: ผลข้อมูลวันประกาศงบล่าสุดที่หน้าเว็บนำไปแสดง
+- `data/sent.json`: ประวัติการแจ้งเตือนที่ส่งแล้ว ใช้ป้องกันการส่งข้อความซ้ำ
