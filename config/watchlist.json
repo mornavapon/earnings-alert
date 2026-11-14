@@ -1,5 +1,7 @@
 {
   "tickers": [
+    "000660..KS",
+    "005930.KS",
     "300750.SZ",
     "AAPL",
     "ADVANC.BK",
@@ -7,7 +9,10 @@
     "AMZN",
     "ARM",
     "ASML",
+    "BBL.BK",
+    "BDMS.BK",
     "CPF.BK",
+    "GOOG",
     "GOOGL",
     "INTC",
     "KO",
@@ -20,5 +25,5 @@
     "TSM",
     "TVO.BK"
   ],
-  "updated_at": "2026-11-11T08:09:57.426Z"
+  "updated_at": "2026-11-14T07:17:02.774Z"
 }
