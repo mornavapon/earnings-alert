@@ -182,6 +182,18 @@ $("reload").onclick = async () => {
   await loadEarnings();
 };
 $("save").onclick = async () => {
+  const confirmed = window.confirm(
+    "ก่อนบันทึก Watchlist โปรดตรวจสอบอุปกรณ์ที่ใช้งาน\n\n" +
+    "แท็บเล็ตคืออุปกรณ์หลักและเป็นฐานข้อมูลอ้างอิงของ Watchlist\n" +
+    "การบันทึกจากคอมพิวเตอร์หรืออุปกรณ์อื่น อาจเขียนทับรายการล่าสุดที่คุณแก้ไขไว้บนแท็บเล็ต\n\n" +
+    "หากตอนนี้คุณไม่ได้ใช้แท็บเล็ตเครื่องหลัก ขอแนะนำให้กด Cancel และอย่าบันทึก\n\n" +
+    "ต้องการบันทึก Watchlist จากอุปกรณ์นี้ไปยัง GitHub ต่อหรือไม่?"
+  );
+  if (!confirmed) {
+    $("save-status").textContent = "ยกเลิกการบันทึก — Watchlist ใน GitHub ยังไม่เปลี่ยนแปลง";
+    return;
+  }
+
   try {
     $("save").disabled = true;
     $("save-status").textContent = "กำลังบันทึก...";
@@ -195,6 +207,10 @@ $("save").onclick = async () => {
     $("save-status").textContent = "บันทึกสำเร็จ — GitHub Actions จะใช้รายการนี้ในการตรวจสอบรอบถัดไป";
     setStatus("บันทึกแล้ว", true);
     render();
+    window.alert(
+      "บันทึก Watchlist ไปยัง GitHub สำเร็จแล้ว\n\n" +
+      "โปรดใช้แท็บเล็ตเครื่องหลักเป็นอุปกรณ์หลักในการแก้ไขและบันทึก Watchlist เสมอ"
+    );
   } catch (error) {
     $("save-status").textContent = "บันทึกไม่สำเร็จ: " + error.message;
     $("save").disabled = false;
