@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-17T16:54:12.481731+07:00",
+  "updated_at": "2026-11-18T16:29:40.360134+07:00",
   "source": "Yahoo Finance via yfinance",
   "tickers": {
     "300750.SZ": {
@@ -91,10 +91,9 @@
       "message": "จะประกาศงบวันที่ 2026-12-23"
     },
     "NVDA": {
-      "previous_date": "2026-08-26",
-      "status": "scheduled",
-      "date": "2026-11-17",
-      "message": "จะประกาศงบวันที่ 2026-11-17"
+      "previous_date": "2026-11-17",
+      "status": "no_date",
+      "message": "Yahoo ยังไม่แสดงกำหนดวันประกาศงบ"
     },
     "SCB.BK": {
       "previous_date": "2026-10-21",
