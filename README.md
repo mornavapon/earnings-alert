@@ -8,6 +8,9 @@
 
 สําคัญ : หลังเพิ่มชื่อหุ้นใน tablet จำเป็นต้องกด run workflow > Earnings Alert ก่อน ทุกครั้ง เพื่อัพเดทข้อมูลวันจ่ายปันผล
 
+ลิ้งค์ไปหน้าเวปแอป
+https://mornavapon.github.io/earnings-alert/
+
 ลิ้งค์ไปยังเอไอที่สร้างแอป
 https://chatgpt.com/g/g-p-6ae01a981d208191b90116a6a767d75e-github/c/6af13eb7-5598-83ec-84ee-bf218f4d985a
 
